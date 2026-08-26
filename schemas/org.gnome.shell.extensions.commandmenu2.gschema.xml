@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+	<schema id="org.gnome.shell.extensions.commandmenu2" path="/org/gnome/shell/extensions/commandmenu2/">
+		<key name="restart-counter" type="i">
+			<default>0</default>
+			<summary>Restart Counter</summary>
+			<description>Restart Counter</description>
+		</key>
+		<key name="config-filepath" type="s">
+			<default>'~/.commands.json'</default>
+			<summary>Configuration File Path</summary>
+			<description>Path to the configuration file</description>
+		</key>
+	</schema>
+</schemalist>
