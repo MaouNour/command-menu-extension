@@ -426,6 +426,73 @@ export default class CommandsUI extends Adw.PreferencesPage {
 
                 row.add_row(entryRowTitle);
                 row.add_row(iconBox);
+
+                // optional: populate this submenu's contents from a script instead
+                // of (or in addition to) the static list below
+                const dynHelpLabel = new Gtk.Label({
+                    label: _('Optionally populate this submenu live from a command. ' +
+                        'The command must print a JSON array of items (same shape as normal menu items) - ' +
+                        'it is re-run on the interval below and its result replaces this submenu\'s contents.'),
+                    wrap: true,
+                    xalign: 0,
+                    margin_top: 6,
+                    margin_bottom: 6,
+                    margin_start: 12,
+                    margin_end: 12,
+                });
+                dynHelpLabel.add_css_class('dim-label');
+                dynHelpLabel.add_css_class('caption');
+
+                const execBox = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL });
+                const entryRowExec = new Adw.EntryRow({ title: _('Populate from command:'), text: item.exec || '', hexpand: true });
+                entryRowExec.connect('notify::text', () => {
+                    item.exec = entryRowExec.text || undefined;
+                });
+                const testButton = new Gtk.Button({
+                    label: _('Test'),
+                    halign: Gtk.Align.END,
+                    margin_bottom: 5,
+                    margin_top: 5,
+                    margin_start: 8,
+                    margin_end: 8,
+                });
+                testButton.connect('clicked', () => {
+                    this._testDynamicExec(entryRowExec.text);
+                });
+                execBox.append(entryRowExec);
+                execBox.append(testButton);
+
+                const intervalRowBox = new Gtk.Box({
+                    orientation: Gtk.Orientation.HORIZONTAL,
+                    spacing: 8,
+                    halign: Gtk.Align.END,
+                    hexpand: true,
+                });
+                const intervalPicker = new Gtk.SpinButton({
+                    adjustment: new Gtk.Adjustment({
+                        lower: 0,
+                        upper: 86400,
+                        step_increment: 1,
+                        page_increment: 10,
+                        value: Number.isFinite(+item.interval) ? +item.interval : 0,
+                    }),
+                    valign: Gtk.Align.CENTER,
+                    halign: Gtk.Align.END,
+                    numeric: true,
+                });
+                intervalPicker.connect('value-changed', spin => {
+                    const val = spin.get_value_as_int();
+                    item.interval = val > 0 ? val : undefined;
+                });
+                intervalRowBox.append(new Gtk.Label({ label: _('seconds (0 = run once)'), valign: Gtk.Align.CENTER }));
+                intervalRowBox.append(intervalPicker);
+                const intervalActionRow = new Adw.ActionRow({ title: _('Refresh interval') });
+                intervalActionRow.add_suffix(intervalRowBox);
+                intervalActionRow.set_activatable(false);
+
+                row.add_row(dynHelpLabel);
+                row.add_row(execBox);
+                row.add_row(intervalActionRow);
             } else if (item.type === 'dynamic') {
                 row.set_title(`<b>${_('Dynamic:')}</b> ${item.title || item.exec || ''}`);
 
@@ -781,8 +848,10 @@ export default class CommandsUI extends Adw.PreferencesPage {
                 command: item.command || '',
             };
 
-            if (item.type === 'dynamic') {
-                newItem.exec = item.exec || '';
+            if (item.type === 'dynamic' || item.type === 'submenu') {
+                if (item.exec) {
+                    newItem.exec = item.exec;
+                }
                 if (Number.isFinite(+item.interval) && +item.interval > 0) {
                     newItem.interval = +item.interval;
                 } else {
