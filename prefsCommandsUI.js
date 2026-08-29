@@ -220,6 +220,7 @@ export default class CommandsUI extends Adw.PreferencesPage {
         const gMenu = new Gio.Menu();
         gMenu.append(_('Add Menu Item'), 'addmenu.addCommand');
         gMenu.append(_('Add Dynamic Item'), 'addmenu.addDynamic');
+        gMenu.append(_('Add Dynamic Submenu'), 'addmenu.addDynamicSubmenu');
         gMenu.append(_('Add Separator'), 'addmenu.addSeparator');
         gMenu.append(_('Add Label'), 'addmenu.addLabel');
         gMenu.append(_('Add Submenu'), 'addmenu.addSubmenu');
@@ -254,6 +255,20 @@ export default class CommandsUI extends Adw.PreferencesPage {
             this._listBoxScrollToBottom();
         });
         addMenuActions.add_action(addDynamicAction);
+
+        const addDynamicSubmenuAction = new Gio.SimpleAction({ name: 'addDynamicSubmenu' });
+        addDynamicSubmenuAction.connect('activate', () => {
+            this._populateListBox(this.commandsListBox, 0, [{
+                type: 'submenu',
+                title: 'Live Submenu',
+                icon: 'utilities-terminal',
+                exec: 'echo \'[{"title":"item 1"},{"title":"item 2"}]\'',
+                interval: 10,
+                submenu: [],
+            }]);
+            this._listBoxScrollToBottom();
+        });
+        addMenuActions.add_action(addDynamicSubmenuAction);
 
         const addSeparatorAction = new Gio.SimpleAction({ name: 'addSeparator' });
         addSeparatorAction.connect('activate', () => {
@@ -378,12 +393,13 @@ export default class CommandsUI extends Adw.PreferencesPage {
                 });
                 row.add_row(entryRowTitle);
             } else if (item.type === "submenu") {
-                row.set_title(`<b>Submenu:</b> ${item.title || ''}`);
+                const submenuLabel = () => item.exec ? _('Live Submenu:') : _('Submenu:');
+                row.set_title(`<b>${submenuLabel()}</b> ${item.title || ''}`);
 
                 const entryRowTitle = new Adw.EntryRow({ title: _('Title:'), text: item.title || '' });
                 entryRowTitle.connect('notify::text', () => {
                     item.title = entryRowTitle.text;
-                    row.set_title(`<b>Submenu:</b> ${item.title || ''}`);
+                    row.set_title(`<b>${submenuLabel()}</b> ${item.title || ''}`);
                 });
 
                 // icon editor
@@ -430,9 +446,10 @@ export default class CommandsUI extends Adw.PreferencesPage {
                 // optional: populate this submenu's contents from a script instead
                 // of (or in addition to) the static list below
                 const dynHelpLabel = new Gtk.Label({
-                    label: _('Optionally populate this submenu live from a command. ' +
+                    label: _('Optionally populate this submenu live from a command instead of the static list below. ' +
                         'The command must print a JSON array of items (same shape as normal menu items) - ' +
-                        'it is re-run on the interval below and its result replaces this submenu\'s contents.'),
+                        'it is re-run on the interval below and its result replaces this submenu\'s contents. ' +
+                        'You can also use "Add Dynamic Submenu" from the Add Item menu to start one pre-filled.'),
                     wrap: true,
                     xalign: 0,
                     margin_top: 6,
@@ -447,6 +464,7 @@ export default class CommandsUI extends Adw.PreferencesPage {
                 const entryRowExec = new Adw.EntryRow({ title: _('Populate from command:'), text: item.exec || '', hexpand: true });
                 entryRowExec.connect('notify::text', () => {
                     item.exec = entryRowExec.text || undefined;
+                    row.set_title(`<b>${submenuLabel()}</b> ${item.title || ''}`);
                 });
                 const testButton = new Gtk.Button({
                     label: _('Test'),
@@ -500,7 +518,8 @@ export default class CommandsUI extends Adw.PreferencesPage {
                     label: _("Runs 'Command to run' (immediately, then every interval) and uses its output. " +
                         "Plain text becomes this item's title. A JSON object like " +
                         '{"title":"...","icon":"...","command":"..."} overrides this item\'s fields. ' +
-                        'A JSON array of such objects generates multiple menu items in its place.'),
+                        'A JSON array of such objects generates multiple items in its place. ' +
+                        'Want a live, collapsible submenu instead? Use "Add Dynamic Submenu" from the Add Item menu.'),
                     wrap: true,
                     xalign: 0,
                     margin_top: 6,
