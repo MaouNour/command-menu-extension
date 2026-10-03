@@ -4,6 +4,6 @@
   "shell-version": ["46", "47", "48", "49", "50"],
   "url": "https://github.com/MaouNour/command-menu-extension",
   "uuid": "advanced-command-menu@maounour",
-  "version": 5,
+  "version": 1,
   "settings-schema": "org.gnome.shell.extensions.advancedcommandmenu"
 }
