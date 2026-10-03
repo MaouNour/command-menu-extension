@@ -1,6 +1,6 @@
 {
-  "description": "A GNOME Shell extension to create highly-customizable menus in the top bar, forked from Command Menu by arunk140. Quickly access your apps, scripts, files and more.",
-  "name": "Command Menu 2",
+  "description": "A GNOME Shell extension to create highly-customizable menus in the top bar, forked from Command Menu by arunk140. Quickly access your apps, scripts, files and more. With more features and live update support.",
+  "name": "Advanced Command Menu",
   "shell-version": ["46", "47", "48", "49", "50"],
   "url": "https://github.com/MaouNour/command-menu-extension",
   "uuid": "advanced-command-menu@maounour",
