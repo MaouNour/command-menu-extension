@@ -1,5 +1,5 @@
 {
-    "icon": "~/.local/share/gnome-shell/extensions/command-menu2@goldentree1.github.com/icons/apple.svg",
+    "icon": "~/.local/share/gnome-shell/extensions/advanced-command-menu@maounour/icons/apple.svg",
     "position": "left",
     "index": 0,
     "menu": [

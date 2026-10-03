@@ -1,6 +1,6 @@
 {
     "title": "Menu",
-    "icon": "~/.local/share/gnome-shell/extensions/command-menu2@goldentree1.github.com/icons/penguin.svg",
+    "icon": "~/.local/share/gnome-shell/extensions/advanced-command-menu@maounour/icons/penguin.svg",
     "position": "center",
     "index": "auto",
     "menu": [

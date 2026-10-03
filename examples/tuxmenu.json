@@ -1,75 +1,73 @@
-[
-  {
-    "title": "Tux",
-    "icon": "~/.local/share/gnome-shell/extensions/command-menu2@goldentree1.github.com/icons/penguin.svg",
-    "position": "left",
-    "index": "auto",
-    "menu": [
-      {
-        "type": "label",
-        "title": "Apps",
-        "command": ""
-      },
-      {
-        "type": "submenu",
-        "title": "Windows VM",
-        "icon": "computer-symbolic",
-        "command": "",
-        "submenu": [
-          {
-            "type": "dynamic",
-            "title": "Start",
-            "command": "vm-status",
-            "exec": "vm-status",
-            "interval": 5
-          },
-          {
-            "title": "Kill RDP",
-            "icon": "x",
-            "command": "winvm-kill"
-          }
-        ]
-      },
-      {
-        "title": "toggle",
-        "icon": "input-touchpad-symbolic",
-        "command": "toggle-touchpad"
-      },
-      {
-        "title": "FTP",
-        "icon": "bareftp",
-        "command": "kitty ftp-auto"
-      },
-      {
-        "title": "Scrcpy",
-        "icon": "qtscrcpy",
-        "command": "kitty connect-mobile"
-      },
-      {
-        "title": "Youtube Downloader",
-        "icon": "youtube",
-        "command": "kitty ytpl --cli"
-      },
-      {
-        "title": "Make Desktop Entry",
-        "icon": "desktop",
-        "command": "kitty desktopentry-cli"
-      },
-      {
-        "title": "Color Picker",
-        "icon": "color",
-        "command": "color-select "
-      },
-      {
-        "type": "separator",
-        "title": "",
-        "command": ""
-      },
-      {
-        "title": "Settings",
-        "icon": "settings",
-        "command": "gnome-extensions prefs command-menu2@goldentree1.github.com"
-      }
-    ]
-  }
-]
+{
+  "title": "Tux",
+  "icon": "~/.local/share/gnome-shell/extensions/advanced-command-menu@maounour/icons/penguin.svg",
+  "position": "left",
+  "index": "auto",
+  "menu": [
+    {
+      "type": "label",
+      "title": "Apps",
+      "command": ""
+    },
+    {
+      "type": "submenu",
+      "title": "Windows VM",
+      "icon": "computer-symbolic",
+      "command": "",
+      "submenu": [
+        {
+          "type": "dynamic",
+          "title": "Start",
+          "command": "vm-status",
+          "exec": "vm-status",
+          "interval": 5
+        },
+        {
+          "title": "Kill RDP",
+          "icon": "x",
+          "command": "winvm-kill"
+        }
+      ]
+    },
+    {
+      "title": "toggle",
+      "icon": "input-touchpad-symbolic",
+      "command": "toggle-touchpad"
+    },
+    {
+      "title": "FTP",
+      "icon": "bareftp",
+      "command": "kitty ftp-auto"
+    },
+    {
+      "title": "Scrcpy",
+      "icon": "qtscrcpy",
+      "command": "kitty connect-mobile"
+    },
+    {
+      "title": "Youtube Downloader",
+      "icon": "youtube",
+      "command": "kitty ytpl --cli"
+    },
+    {
+      "title": "Make Desktop Entry",
+      "icon": "desktop",
+      "command": "kitty desktopentry-cli"
+    },
+    {
+      "title": "Color Picker",
+      "icon": "color",
+      "command": "color-select "
+    },
+    {
+      "type": "separator",
+      "title": "",
+      "command": ""
+    },
+    {
+      "title": "Settings",
+      "icon": "settings",
+      "command": "gnome-extensions prefs command-menu2@goldentree1.github.com"
+    }
+  ]
+}
