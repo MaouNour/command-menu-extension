@@ -169,6 +169,12 @@ export default class GeneralPreferencesPage extends Adw.PreferencesPage {
         sourceFile: "examples/systemmenu.json",
         description: "Some system utilities and settings.",
       },
+      {
+        name: "Tux Menu",
+        image: "icons/tuxmenu.png",
+        sourceFile: "examples/tuxmenu.json",
+        description: "Nour Menu , featuring winapps,ftp,touchpad disable, scrcpy,youtube download script and others.",
+      },
     ];
     const templatesFlowBox = new Gtk.FlowBox({
       selection_mode: Gtk.SelectionMode.NONE,
